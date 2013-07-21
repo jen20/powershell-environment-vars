@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Management.Automation.Host;
 
-namespace EnvironmentBlocks
+namespace EnvironmentVars
 {
 	public sealed class EnvironmentFrame
 	{
 		private readonly IDictionary _variables;
 
-		public EnvironmentFrame(string description)
+		public EnvironmentFrame(string description = "", PSHost host = null)
 		{
+			WindowTitle = host == null ? "" : host.UI.RawUI.WindowTitle;
 			Timestamp = DateTime.Now;
 			Description = description ?? String.Empty;
 			var envvars = Environment.GetEnvironmentVariables();
@@ -20,14 +22,16 @@ namespace EnvironmentBlocks
 			}
 		}
 
+		public string WindowTitle { get; private set; }
 		public string Description { get; private set; }
 		public DateTime Timestamp { get; private set; }
+		
 		public IDictionary Variables
 		{
 			get { return _variables; }
 		}
 
-		public void Restore()
+		public void Restore(PSHost host = null)
 		{
 			// Delete environment variables that are in the current
 			// environment but not in the one being restored.
@@ -47,6 +51,9 @@ namespace EnvironmentBlocks
 				var value = (string)entry.Value;
 				Environment.SetEnvironmentVariable(name, value);
 			}
+
+			if (host != null)
+				host.UI.RawUI.WindowTitle = WindowTitle;
 		}
 	}
 }

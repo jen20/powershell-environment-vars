@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace EnvironmentBlocks
+namespace EnvironmentVars
 {
-	[Cmdlet("Pop", "EnvironmentVars")]
-	public sealed class PopEnvironmentVarsCommand : Cmdlet
+	[Cmdlet("Pop", "Environment")]
+	public sealed class PopEnvironmentCommand : PSCmdlet
 	{
 		protected override void EndProcessing()
 		{
-			var frame = Context.EnvironmentStack.Pop();
+			var frame = Frames.EnvironmentStack.Pop();
 
 			if (frame == null)
 				return;
@@ -16,7 +16,7 @@ namespace EnvironmentBlocks
 			if (!String.IsNullOrEmpty(frame.Description))
 				WriteVerbose("Restoring " + frame.Description);
 
-			frame.Restore();
+			frame.Restore(Host);
 		}
 	}
 }

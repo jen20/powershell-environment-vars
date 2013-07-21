@@ -38,13 +38,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context.cs" />
+    <Compile Include="Frames.cs" />
     <Compile Include="EnvironmentFrame.cs" />
-    <Compile Include="GetCurrentEnvironmentVarsCommand.cs" />
-    <Compile Include="GetPushedEnvironmentVarsCommand.cs" />
-    <Compile Include="PopEnvironmentVarsCommand.cs" />
+    <Compile Include="PopEnvironmentCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PushEnvironmentVarsCommand.cs" />
+    <Compile Include="PushEnvironmentCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

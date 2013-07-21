@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace EnvironmentBlocks
+namespace EnvironmentVars
 {
-	public sealed class Context
+	public sealed class Frames
 	{
 		private static Stack<EnvironmentFrame> _environment;
 
