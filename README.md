@@ -3,19 +3,21 @@ powershell-environment-vars
 
 This is the solution for a PowerShell module which provides the following cmdlets:
 
-# Push-Environment
+## Push-Environment
 
 `Push-Environment -Description "Some description"`
 
 This pushes the current environment variables and Host Window Title onto a
 stack.
 
-# Pop-Environment
+## Pop-Environment
+
+`Pop-Environment`
 
 This pops the most recently pushed environment variables and Host Window Title
 and restores them.
 
-# Why is this useful?
+## Why is this useful?
 
 Sometimes it is necessary to change things like the PATH for the duration of a
 script, for example when you want to use MSBuild from a PowerShell script from
