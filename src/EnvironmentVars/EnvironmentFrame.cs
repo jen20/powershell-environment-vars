@@ -9,9 +9,17 @@ namespace EnvironmentVars
 	{
 		private readonly IDictionary _variables;
 
+        public string WindowTitle { get; private set; }
+        public ConsoleColor BackgroundColor { get; private set; }
+	    public ConsoleColor ForegroundColor { get; private set; }
+	    public string Description { get; private set; }
+        public DateTime Timestamp { get; private set; }
+
 		public EnvironmentFrame(string description = "", PSHost host = null)
-		{
+        {
 			WindowTitle = host == null ? "" : host.UI.RawUI.WindowTitle;
+		    BackgroundColor = host == null ? ConsoleColor.DarkBlue : host.UI.RawUI.BackgroundColor;
+		    ForegroundColor = host == null ? ConsoleColor.White : host.UI.RawUI.ForegroundColor;
 			Timestamp = DateTime.Now;
 			Description = description ?? String.Empty;
 			var envvars = Environment.GetEnvironmentVariables();
@@ -21,11 +29,7 @@ namespace EnvironmentVars
 				_variables.Add(entry.Key, entry.Value);
 			}
 		}
-
-		public string WindowTitle { get; private set; }
-		public string Description { get; private set; }
-		public DateTime Timestamp { get; private set; }
-		
+        
 		public IDictionary Variables
 		{
 			get { return _variables; }
@@ -52,8 +56,12 @@ namespace EnvironmentVars
 				Environment.SetEnvironmentVariable(name, value);
 			}
 
-			if (host != null)
-				host.UI.RawUI.WindowTitle = WindowTitle;
+		    if (host != null)
+		    {
+		        host.UI.RawUI.WindowTitle = WindowTitle;
+		        host.UI.RawUI.BackgroundColor = BackgroundColor;
+		        host.UI.RawUI.ForegroundColor = ForegroundColor;
+		    }
 		}
 	}
 }
